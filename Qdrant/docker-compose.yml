@@ -1,0 +1,34 @@
+version: "3.3"
+services:
+
+  qdrant:
+    container_name: qdarant
+    image: qdrant/qdrant:latest
+    ports:
+      - 6333:6333
+    volumes:
+      - ./Qdrant:/qdrant/storage
+      
+  hindalcobot:
+    container_name: hindalcobot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Production"  
+    ports:
+      - 3978:80
+    depends_on:
+      - qdrant
+    restart: always
+
+  
+
+#TO RUN ONLY THE SqlServer USE THE FOLLOWING COMMAND
+# docker run -d \
+#   --name qdarantForHindalco \
+#   -p 6333:6333 \
+#   -v ${pwd}/Qdrant:/qdrant/storage \
+#   qdrant/qdrant:latest
+
+# docker run -d --name mssql  -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=CEleb@L_TECH -p 1433:1433 -v "$(pwd)/DatabaseLayer/data/:/var/opt/mssql/data/" -v "$(pwd)/DatabaseLayer/log/:/var/opt/mssql/log/" -v "$(pwd)/DatabaseLayer/secrets/:/var/opt/mssql/secrets/" mcr.microsoft.com/mssql/server:2022-latest

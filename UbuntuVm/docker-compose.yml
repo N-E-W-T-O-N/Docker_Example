@@ -1,0 +1,10 @@
+version: '3'
+services:
+  ubuntu-rdp:
+    build:
+      context: .
+      args:
+        USERNAME: newton
+        PASSWORD: newton
+    ports:
+      - "3389:3389"

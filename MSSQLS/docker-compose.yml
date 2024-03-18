@@ -1,0 +1,38 @@
+version: "3.3"
+services:
+  hindalcobot:
+    container_name: hindalcobot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Production"  
+    ports:
+      - 3978:80
+    depends_on:
+      - qdrant
+      - mssql
+    restart: always
+
+  mssql:
+    container_name: mssql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    platform: linux
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=CEleb@L_TECH
+      - TZ=Asia/Kolkata #Set IST as local time 
+    restart: always  
+    ports:
+      - 1433:1433
+    volumes:
+      - "./DatabaseLayer/data/:/var/opt/mssql/data/"
+      - "./DatabaseLayer/log/:/var/opt/mssql/log/"
+      - "./DatabaseLayer/secrets/:/var/opt/mssql/secrets/"
+      #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+#Data Source=52.172.225.159,1433;Initial Catalog=SK;User ID=sa;Password=****;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
+
+#TO RUN ONLY THE SqlServer USE THE FOLLOWING COMMAND
+# docker run -d --name mssql  -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=CEleb@L_TECH -p 1433:1433 -v "$(pwd)/DatabaseLayer/data/:/var/opt/mssql/data/" -v "$(pwd)/DatabaseLayer/log/:/var/opt/mssql/log/" -v "$(pwd)/DatabaseLayer/secrets/:/var/opt/mssql/secrets/" mcr.microsoft.com/mssql/server:2022-latest

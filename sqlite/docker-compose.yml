@@ -1,0 +1,10 @@
+version: '3.8'
+services: 
+  sqlite:
+      build:
+        context: ./PersistentData
+        dockerfile: Dockerfile
+      volumes:
+        - ./PersistentData/SqliteData:/SqliteData
+      networks:
+        - chat-network

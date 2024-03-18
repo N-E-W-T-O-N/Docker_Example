@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  ubuntuvm:
+    container_name: "ubuntuVM"
+    privileged: true
+    devices:
+      - /dev/kvm:/dev/kvm #Use virtualization inside container
+      - /dev/net/tun:/dev/net/tun #Use virtual network inside container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN 
+    tty: true
+    stdin_open: true   
+ 
+    ports:
+       - 3389:3389  

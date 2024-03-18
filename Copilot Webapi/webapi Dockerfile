@@ -1,0 +1,21 @@
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY CopilotChatWebApi.csproj .
+RUN dotnet restore --use-current-runtime  
+
+#Certificate
+RUN dotnet dev-certs https --clean 
+RUN dotnet dev-certs https --trust
+# copy everything else and build app
+COPY . ./
+RUN dotnet publish -c Release -o /out --use-current-runtime --self-contained false --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /source
+EXPOSE 40443
+COPY --from=build /source/out  .
+ENTRYPOINT ["dotnet", "CopilotChatWebApi.dll"]

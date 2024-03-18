@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+sqlite:
+    image: keinos/sqlite3:latest
+    container_name: sqlite
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./$(PWD)/PersistentData/SqliteData:/sqlite
+    networks:
+      - chat-network

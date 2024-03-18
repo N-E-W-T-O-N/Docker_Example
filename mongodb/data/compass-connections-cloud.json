@@ -1,0 +1,25 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "bb07c5b7-943f-45fd-ae6d-c8d5f5ed5dfc",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1701840462013"
+        }
+      },
+      "favorite": {
+        "name": "cloud"
+      },
+      "connectionOptions": {
+        "connectionString": "mongodb://mongoadmin:password@https://semantickbot.centralindia.cloudapp.azure.com:27017/?authMechanism=DEFAULT",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjowLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}
