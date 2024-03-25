@@ -1,0 +1,10 @@
+version: '3'
+services:
+  latex:
+    build: 
+      context: .
+      dockerfile: alpine.Dockerfile
+    volumes:
+      - "./file:/file"
+    working_dir: "/file"
+    command: ["sleep","infinity"]    
